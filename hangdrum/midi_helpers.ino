@@ -1,4 +1,5 @@
 #include "midi_settings.h"
+#include "hangdrum_helpers.h"
 
 void midi_sanity_check()
 {
@@ -6,11 +7,14 @@ void midi_sanity_check()
   	delay(1000);
   	usbMIDI.sendNoteOff(note, velocity, channel);
   	delay(1000);
+}
 
-  	// MIDI Controllers should discard incoming MIDI messages.
-  	// http://forum.pjrc.com/threads/24179-Teensy-3-Ableton-Analog-CC-causes-midi-crash
-  	while (usbMIDI.read())
-  	{
-    	// ignore incoming messages
-  	}
+void turn_note_on(uint32_t note, uint32_t velocity, uint32_t channel)
+{
+	usbMIDI.sendNoteOn(note, velocity, channel);
+}
+
+void turn_note_off(uint32_t note, uint32_t velocity, uint32_t channel)
+{
+	usbMIDI.sendNoteOff(note, velocity, channel);
 }
